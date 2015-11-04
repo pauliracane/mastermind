@@ -34,7 +34,7 @@ TOP:
 
 	guesses++;
 	
-	//Assign malable number to be same as random number
+	//Assign malleable number to be same as random number
 	for (int x = 0; x < 4; x++)
 		malnumber[x]=number[x];
 	
