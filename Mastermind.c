@@ -29,7 +29,7 @@ TOP:
 	if (strlen(guess)!=4)
 		goto TOP;
 	for (int x = 0; x < 4; x ++)
-		if (isalpha(guess[x]))
+		if (!isdigit(guess[x]))
 			goto TOP;
 
 	guesses++;
@@ -51,26 +51,30 @@ WIN:
 	printf("You Win!  It took you %d guesses.\n", guesses);
 }
 
-
+//As the name suggests, generate random number
 int numgen(char mynum[])
 	{
 	srand(time(NULL)+clock());
 	int x=0;
+	//Assign random number in to character arrays, for ease of mutation + checking
 	for (x = 0; x < 4; x++)
 		mynum[x]=rand()%9 + '0';
 	mynum[x]='\0';
 	return 0;
 	}
 
-
+//Check values for 'red' pegs
 int redcheck(char *changingNum, char *input)
 	{
 	int x = 0, red=0;
+	//For each value in guess / number, if they're the same, +1 red peg
 	for (x=0; x<4; x++)
 		{
 		if (changingNum[x]==input[x])
 			{
 			red++;
+			//Mutate the guess and the variable for 
+			//the number I'm working with to avoid duplicate checks
 			changingNum[x]='x';
 			input[x]='y';
 			}
@@ -81,12 +85,16 @@ int redcheck(char *changingNum, char *input)
 int whitecheck(char *changingNum, char *input)
 	{
 	int white = 0, x = 0, y = 0;
+	//For each value in input, if it matches
+	//any value in the number, increment white
 	for (x=0; x<4; x++)
 		{
 		for (y=0; y<4; y++)
 			{
 			if (changingNum[y]==input[x])
 				{
+				//Mutate guess and the number
+				//I'm working with.
 				changingNum[y]='x';
 				input[x]='y';
 				white++;
@@ -95,5 +103,3 @@ int whitecheck(char *changingNum, char *input)
 		}
 	return white;
 	}
-
-
