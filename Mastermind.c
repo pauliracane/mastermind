@@ -25,8 +25,7 @@ TOP:
 	printf("Go ahead and guess, I dare you: ");
 	//Check for appropriate input
 	scanf("%20s", guess);
-	//If it's too long, don't prompt again, until you're done going through 	what they input
-	//The current issue: If guess length % 5 == 4, it'll run, if guess 		length %5 = 0, it'll "hang" on the scan, and wait on input...
+	//If it's too long, don't prompt again, until you're done going through	what they input
 	if (strlen(guess)!=4)
 		goto TOP;
 	for (int x = 0; x < 4; x ++)
