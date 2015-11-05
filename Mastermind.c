@@ -11,6 +11,9 @@ int whitecheck(char *changingNum, char *input);
 	
 int main(void)
 {
+int game = 0;
+do
+{
 	char number[5]={'\0'};
 	char malnumber[5]={'\0'};
 	char guess[5]={'\0'};
@@ -49,7 +52,17 @@ TOP:
 	}
 WIN:
 	printf("You Win!  It took you %d guesses.\n", guesses);
+//Play It Again Sports
+	printf("Would you like to play again? (0 for no)\n");
+	scanf("%2d", &game);
+}while(game != 0);
+
 }
+
+
+
+
+
 
 //As the name suggests, generate random number
 int numgen(char mynum[])
@@ -103,3 +116,12 @@ int whitecheck(char *changingNum, char *input)
 		}
 	return white;
 	}
+
+
+
+/*
+void playself()
+{
+	
+}
+*/
