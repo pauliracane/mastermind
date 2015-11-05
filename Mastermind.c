@@ -7,6 +7,7 @@
 int numgen(char mynum[]);
 int redcheck(char *changingNum, char *input);
 int whitecheck(char *changingNum, char *input);
+int playself(char *changingNum);
 
 	
 int main(void)
@@ -119,9 +120,48 @@ int whitecheck(char *changingNum, char *input)
 
 
 
-/*
-void playself()
+
+int playself(char *changingNum)
 {
-	
+	int y = 0, guesses = 0,red = 0;
+	char answer[5]={'x', 'x', 'x', 'x', '\0'};
+	char guess[5] = {'0','0','0','0','\0'};
+	char values[5] = {'x', 'x', 'x', 'x', '\0'};
+	char wrong = '\0';
+	for (int x = 0; x < 10; x++)
+		{
+		for (int z = 0; z < 4; z++)
+			guess[z]=guess[z]+x;
+		red = redcheck(changingNum,guess);
+		guesses++;
+		
+		if (red == 4)
+			{
+			strncpy(answer, guess, sizeof(answer));
+			break;
+			}
+		for (y=y;y<(y+red);y++)
+			values[y]=x+'0';
+		if (!red)
+			wrong = x + '0';
+		}
+	for (int x = 0; x<4; x++)
+		guess[x]=wrong;
+	for (int x = 0; x<4; x++){
+		for (int y = 0; y < 4; y ++){
+			guess[x]=values[y];
+			guesses++;
+			if(redcheck(changingNum,guess))
+				{
+				answer[x]=values[y];
+				break;
+				}
+			if(answer[3]!='x')
+				break;
+		}
+		if (answer[3]!='x')
+			break;
+	}
+	return guesses;
 }
-*/
+
