@@ -13,6 +13,7 @@ int playself(char *changingNum);
 int main(void)
 {
 int game = 0;
+
 do
 {
 	char number[5]={'\0'};
@@ -22,6 +23,12 @@ do
 
         //Get random number
         numgen(number);
+	
+	//Assign malleable number to be same as random number
+        for (int x = 0; x < 4; x++)
+                        malnumber[x]=number[x];
+
+
 	//Until they guess the number
 	for(;;)
 	{
@@ -37,11 +44,11 @@ TOP:
 			goto TOP;
 
 	guesses++;
-	
+        
 	//Assign malleable number to be same as random number
-	for (int x = 0; x < 4; x++)
-		malnumber[x]=number[x];
-	
+        for (int x = 0; x < 4; x++)
+               malnumber[x]=number[x];
+
 	//Check their value for red numbers	
 	red=redcheck(malnumber,guess);
 	//check for white numbers.
@@ -51,9 +58,10 @@ TOP:
 		goto WIN;
 	printf("Red:%d,  White:%d\n\n", red, white);
 	}
+	
 WIN:
 	printf("You Win!  It took you %d guesses.\n", guesses);
-//Play It Again Sports
+	//Play it Again Sports
 	printf("Would you like to play again? (0 for no)\n");
 	scanf("%2d", &game);
 }while(game != 0);
