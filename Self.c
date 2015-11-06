@@ -8,34 +8,50 @@ int numgen(char mynum[]);
 int redcheck(char *changingNum, char *input);
 int whitecheck(char *changingNum, char *input);
 
-int playself(char *changingNum);
-FindAnswer(char values, char guess, int guesses, char changingNum);
+int playself(char *changingNum, char *values);
+int FindAnswer(char *values, char *guess, int guesses, char *changingNum, char *answer);
 
 	
 int main(void)
 {
-	int game = 0;
-	char number[5]={'\0'};
+int game = 0;
+do
+{
+	char number[5]={'x', 'x', 'x', 'x', '\0'};
+	char values[5]={'x', 'x', 'x', 'x', '\0'};
+	char guess [5]= {'\0'};
+        char answer[5]={'x','x','x','x','\0'};
 	int guesses=0;
         char malnumber[5] = {'\0'};
         //Get random number
         numgen(number);
 	//Assign malleable number to be same as random number
+	for (int x = 0; x < 4; x++)
+               malnumber[x]=number[x];
+
 	//Until they guess the number
+	
 	for(;;)
 	{
 	//Assign malleable number to be same as random number
+	guesses = playself(malnumber, values);
+
         for (int x = 0; x < 4; x++)
                malnumber[x]=number[x];
-	guesses = playself(malnumber);
-	printf("Guesses outside of playself: %d", guesses);
-	}
+
+	guesses = FindAnswer(values, guess, guesses, malnumber, answer);
 	
+	for (int x = 0; x < 4; x++)
+               malnumber[x]=number[x];
+	printf("The answer is: %s\n", answer);
+	if (!(strncmp(number, answer, sizeof(answer))))
+		break;
+	}
 	printf("You Win!  It took you %d guesses.\n", guesses);
 	//Play it Again Sports
 	printf("Would you like to play again? (0 for no)\n");
 	scanf("%2d", &game);
-
+} while(game != 0);
 }
 
 
@@ -59,13 +75,12 @@ int numgen(char mynum[])
 int redcheck(char *changingNum, char *input)
 	{
 	int x = 0, red=0;
-	printf("%s, %s \n", changingNum, input);
 	//For each value in guess / number, if they're the same, +1 red peg
 	for (x=0; x<4; x++)
 		{
 		if (changingNum[x]==input[x])
 			{
-			red++; //I don't get how this line is breaking it.
+			red++; 
 			//Mutate the guess and the variable for 
 			//the number I'm working with to avoid duplicate checks
 			changingNum[x]='x';
@@ -100,13 +115,13 @@ int whitecheck(char *changingNum, char *input)
 
 
 //This gets the values stored in the answer.
-int playself(char *changingNum)
+int playself(char *changingNum, char *values)
 {
 	//set asside storage for ints and arrays and what have you
 	int y = 0, guesses = 0,red = 0;
 	char answer[5]={'x', 'x', 'x', 'x', '\0'};
 	char guess[5] = {'0','0','0','0','\0'};
-	char values[5] = {'x', 'x', 'x', 'x', '\0'};
+//	char values[5] = {'x', 'x', 'x', 'x', '\0'};
 	char wrong = 'w';
 	//for each number
 	for (int x = 0; x < 10; x++)
@@ -114,11 +129,10 @@ int playself(char *changingNum)
 		//Guess = 4 of that number
 		for (int z = 0; z < 4; z++)
 			guess[z]=x+'0';
-		printf("Guess: %s\n", guess);	
+		printf("Guessing: %s\n", guess);
 		red = redcheck(changingNum,guess);
-		printf("Red: %d\n\n", red);
+		printf("Got: %d Reds\n", red);
 		guesses++;
-		printf("Guesses: %d\n", guesses);
 		//If guess = answer, break, break, break.
 		if (red == 4)
 			{
@@ -129,7 +143,6 @@ int playself(char *changingNum)
 		int z = y + red;
 		for (y=y;y<z;y++)
 			{
-			printf("%d\n", y);
 			values[y]=x+'0';
 			}
 		if (values[3]!='x')
@@ -141,19 +154,18 @@ int playself(char *changingNum)
 	//Set all digits in guess to wrong
 	for (int x = 0; x<4; x++)
 		guess[x]=wrong;
-	printf("%s", values);
 	//Go through each value stored at Values in each location guess
 	return guesses;
 }
 
-FindAnswer(char values, char guess, int guesses, char changingNum)
+int FindAnswer(char *values, char *guess, int guesses, char *changingNum, char *answer)
 {
-	answer={'x','x','x','x','\0'};
 	for (int x = 0; x<4; x++){
 		for (int y = 0; y < 4; y ++){
 			guess[x]=values[y];
 			guesses++;
 			//Check for reds in RXXX, then repeat on 2nd value.
+			printf("Guessing: %s\n", guess);
 			if(redcheck(changingNum,guess))
 				{
 				answer[x]=values[y];
@@ -161,7 +173,7 @@ FindAnswer(char values, char guess, int guesses, char changingNum)
 			if(answer[3]!='x')
 				break;
 		}
-		printf("Values: %s\nAnswer: %s\n",values, answer);
+		
 		if (answer[3]!='x')
 			break;
 	}
