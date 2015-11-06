@@ -171,6 +171,7 @@ int FindAnswer(char *values, char *guess, int guesses, char *changingNum, char *
 			if(redcheck(changingNum,guess))
 				{
 				answer[x]=values[y];
+				break;
 				}
 				//When last number is put in, exit for loop.
 			if(answer[3]!='x')
