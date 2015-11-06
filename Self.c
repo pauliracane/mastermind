@@ -157,11 +157,13 @@ int playself(char *changingNum, char *values)
 	//Go through each value stored at Values in each location guess
 	return guesses;
 }
-
+//I don't think I needed ot pass all of these in but...whatever.
 int FindAnswer(char *values, char *guess, int guesses, char *changingNum, char *answer)
 {
+	
 	for (int x = 0; x<4; x++){
 		for (int y = 0; y < 4; y ++){
+			//For each value in Values, assign to Guess[0],guess[1]...etc
 			guess[x]=values[y];
 			guesses++;
 			//Check for reds in RXXX, then repeat on 2nd value.
@@ -170,6 +172,7 @@ int FindAnswer(char *values, char *guess, int guesses, char *changingNum, char *
 				{
 				answer[x]=values[y];
 				}
+				//When last number is put in, exit for loop.
 			if(answer[3]!='x')
 				break;
 		}
