@@ -45,8 +45,6 @@ TOP:
 
 			guesses++;
 			//Assign malleable number to be same as random number
-			for (int x = 0; x < 4; x++)
-				malnumber[x]=number[x];
 
 			//Check their value for red numbers	
 			red=redcheck(malnumber,guess);
@@ -56,6 +54,10 @@ TOP:
 			if (red==4)
 				goto WIN;
 			printf("Red:%d,  White:%d\n\n", red, white);
+                        //Assign malleable number to be same as random number
+	                for (int x = 0; x < 4; x++)
+                                malnumber[x]=number[x];
+
 		}
 WIN:
 		printf("You Win!  It took you %d guesses.\n", guesses);
